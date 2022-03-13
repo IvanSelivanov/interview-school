@@ -1,0 +1,48 @@
+class ClassroomsController < ApplicationController
+  before_action :set_classroom, only: %i[show edit update destroy]
+
+  def index
+    @classrooms = Classroom.all
+  end
+
+  def show
+  end
+
+  def new
+    @classroom = Classroom.new
+  end
+
+  def create
+    @classroom = Classroom.new(classroom_params)
+    if @classroom.save
+      redirect_to @classroom, notice: 'classroom was successfully created'
+    else
+      render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @classroom.update(classroom_params)
+      redirect_to @classroom, notice: 'classroom was successfully updated'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @classroom.destroy
+    redirect_to classrooms_path, notice: 'classroom was successfully destroyed'
+  end
+
+  private
+  def set_classroom
+    @classroom = Classroom.find(params[:id])
+  end
+
+  def classroom_params
+    params.require(:classroom).permit(:name, :description)
+  end
+end

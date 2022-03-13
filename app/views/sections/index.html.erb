@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sections</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Class</th>
+    <th>Teacher</th>
+    <th>Classroom</th>
+    <th>Days</th>
+    <th>Start</th>
+    <th>End</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @sections.each do |section| %>
+    <tr>
+      <td><%= section.teacher_subject.subject.name %></td>
+      <td><%= section.teacher_subject.teacher.first_and_last_name %></td>
+      <td><%= section.classroom.name %></td>
+      <td><%= section.weekdays %></td>
+      <td><%= section.start_at.strftime('%H:%M') %></td>
+      <td><%= section.end_at.strftime('%H:%M') %></td>
+      <td>
+        <% if current_student.sections.include?(section) %>
+          <%= link_to 'Leave', sections_leave_path(id: section.id) %>
+        <% elsif current_student.can_enroll_section?(section) %>
+          <%= link_to 'Enroll', sections_enroll_path(id: section.id) %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

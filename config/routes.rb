@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'sections/index'
+  get 'sections/enroll'
+  get 'sections/leave'
+  # get 'sections/list'
+  resources :classrooms
   resources :teachers do
     resources :teacher_subjects, shallow: true
   end
