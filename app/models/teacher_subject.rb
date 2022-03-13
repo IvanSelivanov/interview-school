@@ -2,9 +2,10 @@ class TeacherSubject < ApplicationRecord
   DEFAULT_LEVEL = 5
 
   belongs_to :teacher
-  belongs_to :subject
+  belongs_to :subject # subjects are not deleted with the teacher. maybe we should use dependent: :destroy?
+  has_many :sections
 
-  validates :teacher, uniqueness: {scope: :subject}, if: :_not_marked_for_destruction?
+  validates :teacher, uniqueness: { scope: :subject }, if: :_not_marked_for_destruction?
 
   validates :level, presence: true
   before_validation :_default_values_on_create, on: :create
